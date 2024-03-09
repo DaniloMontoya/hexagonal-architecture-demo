@@ -1,0 +1,11 @@
+server:
+  port: 8082
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5434/f2x_financial_entity
+    username: f2x_user
+    password: f2x123456
+    driverClassName: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
