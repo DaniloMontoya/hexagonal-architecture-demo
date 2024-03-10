@@ -11,12 +11,14 @@ import co.com.flypass.f2xfinancialentity.model.dto.transaction.TransferAccountDT
 import co.com.flypass.f2xfinancialentity.model.dto.transaction.WithdrawalDTO;
 import co.com.flypass.f2xfinancialentity.repository.TransactionRepository;
 import co.com.flypass.f2xfinancialentity.service.ProductService;
+import co.com.flypass.f2xfinancialentity.service.ProductTransactionService;
 import co.com.flypass.f2xfinancialentity.service.TransactionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @author Ing. Danilo Montoya Hernandez;
@@ -29,8 +31,10 @@ public class TransactionServiceImpl implements TransactionService {
 
     public static final String REQUIRED_FIELDS_MESSAGE = "Campos requeridos";
     public static final String TRANSACTION_AMOUNT_MUST_MAYOR_ZERO_MESSAGE = "El valor de la transacción debe se mayor de $0 (cero)";
+    public static final String FONDOS_INSUFICIENTES_MESSAGE = "Fondos insuficientes";
     private final TransactionRepository transactionRepository;
     private final ProductService productService;
+    private final ProductTransactionService productTransactionService;
     private final TransactionMapper transactionMapper;
 
     @Transactional
@@ -41,7 +45,7 @@ public class TransactionServiceImpl implements TransactionService {
         }
         validateTransactionAmount(consignmentDTO.getAmount());
         var destinationProduct = productService.findByAccountNumber(consignmentDTO.getDestinationAccount());
-        var productDTO = productService.consignment(destinationProduct, consignmentDTO.getAmount());
+        var productDTO = productTransactionService.consignment(destinationProduct, consignmentDTO.getAmount());
         var transactionModel = new TransactionBuilder()
                 .withType(TransactionType.CONSIGNMENT)
                 .withDestinationAccount(productDTO.getAccountNumber())
@@ -59,11 +63,31 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDTO withdrawal(WithdrawalDTO withdrawalDTO) {
-        return null;
+        if (null == withdrawalDTO) {
+            throw new MandatoryValueException(REQUIRED_FIELDS_MESSAGE);
+        }
+
+        var sourceProduct = productService.findByAccountNumber(withdrawalDTO.getSourceAccount());
+        var productDTO = productTransactionService.withdrawal(sourceProduct, withdrawalDTO.getAmount());
+        var transactionModel = new TransactionBuilder()
+                .withType(TransactionType.WITHDRAWAL)
+                .withSourceAccount(productDTO.getAccountNumber())
+                .withAmount(withdrawalDTO.getAmount())
+                .withTransactionDate(LocalDateTime.now())
+                .build();
+        return transactionMapper.modelToDTO(transactionRepository.save(transactionModel));
     }
 
     @Override
     public TransactionDTO transferBetweenAccounts(TransferAccountDTO transferAccountDTO) {
         return null;
+    }
+
+    @Override
+    public List<TransactionDTO> findAll() {
+        return transactionRepository.findAll()
+                .stream()
+                .map(transactionMapper::modelToDTO)
+                .toList();
     }
 }

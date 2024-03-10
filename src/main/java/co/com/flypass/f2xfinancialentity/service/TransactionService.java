@@ -5,6 +5,8 @@ import co.com.flypass.f2xfinancialentity.model.dto.transaction.TransactionDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.transaction.TransferAccountDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.transaction.WithdrawalDTO;
 
+import java.util.List;
+
 /**
  * @author Ing. Danilo Montoya Hernandez;
  * Email: danilo9831montoya@gmail.com
@@ -16,4 +18,6 @@ public interface TransactionService {
     TransactionDTO withdrawal(WithdrawalDTO withdrawalDTO);
 
     TransactionDTO transferBetweenAccounts(TransferAccountDTO transferAccountDTO);
+
+    List<TransactionDTO> findAll();
 }

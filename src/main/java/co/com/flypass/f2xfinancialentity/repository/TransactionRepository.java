@@ -2,6 +2,9 @@ package co.com.flypass.f2xfinancialentity.repository;
 
 import co.com.flypass.f2xfinancialentity.model.TransactionModel;
 
+import java.util.Collection;
+import java.util.List;
+
 /**
  * @author Ing. Danilo Montoya Hernandez;
  * Email: danilo9831montoya@gmail.com
@@ -9,4 +12,6 @@ import co.com.flypass.f2xfinancialentity.model.TransactionModel;
  **/
 public interface TransactionRepository {
     TransactionModel save(TransactionModel transactionModel);
+
+    List<TransactionModel> findAll();
 }

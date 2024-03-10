@@ -206,14 +206,4 @@ public class ProductServiceImpl implements ProductService {
         return productRepository.findByAccountNumber(accountNumber)
                 .isPresent();
     }
-
-    @Transactional
-    @Override
-    public ProductDTO consignment(ProductDTO destinationProduct, double amount) {
-        var productBuilder = new ProductBuilder(destinationProduct);
-        productBuilder.withModificationDate(LocalDateTime.now());
-        productBuilder.withBalance(destinationProduct.getBalance() + amount);
-        var productModel = productRepository.update(productBuilder.build());
-        return productMapper.modelToDto(productModel);
-    }
 }

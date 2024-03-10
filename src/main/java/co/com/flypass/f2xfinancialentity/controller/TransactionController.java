@@ -6,10 +6,9 @@ import co.com.flypass.f2xfinancialentity.model.dto.transaction.TransferAccountDT
 import co.com.flypass.f2xfinancialentity.model.dto.transaction.WithdrawalDTO;
 import co.com.flypass.f2xfinancialentity.service.TransactionService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Ing. Danilo Montoya Hernandez;
@@ -21,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class TransactionController {
     private final TransactionService transactionService;
+
+    @GetMapping("all")
+    public List<TransactionDTO> getAll(){
+        return transactionService.findAll();
+    }
 
     @PostMapping("consignment")
     public TransactionDTO consignment(@RequestBody ConsignmentDTO consignmentDTO){

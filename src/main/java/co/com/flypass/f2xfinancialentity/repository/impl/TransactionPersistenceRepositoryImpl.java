@@ -7,6 +7,8 @@ import co.com.flypass.f2xfinancialentity.repository.jpa.TransactionJpaRepository
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * @author Ing. Danilo Montoya Hernandez;
  * Email: danilo9831montoya@gmail.com
@@ -17,10 +19,19 @@ import org.springframework.stereotype.Repository;
 public class TransactionPersistenceRepositoryImpl implements TransactionRepository {
     private final TransactionJpaRepository transactionJpaRepository;
     private final TransactionMapper transactionMapper;
+
     @Override
     public TransactionModel save(TransactionModel transactionModel) {
         var entity = transactionMapper.modelToEntity(transactionModel);
         var savedEntity = transactionJpaRepository.save(entity);
         return transactionMapper.entityToModel(savedEntity);
+    }
+
+    @Override
+    public List<TransactionModel> findAll() {
+        return transactionJpaRepository.findAll()
+                .stream()
+                .map(transactionMapper::entityToModel)
+                .toList();
     }
 }
