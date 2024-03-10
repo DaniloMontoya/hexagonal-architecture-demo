@@ -1,6 +1,5 @@
 package co.com.flypass.f2xfinancialentity.service;
 
-import co.com.flypass.f2xfinancialentity.exception.InvalidValueException;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductCreateDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductUpdateDTO;
@@ -34,4 +33,6 @@ public interface ProductService {
     void validateAccountExist(String id);
 
     boolean isZeroBalance(double balance);
+
+    boolean existAccountNumber(String accountNumber);
 }

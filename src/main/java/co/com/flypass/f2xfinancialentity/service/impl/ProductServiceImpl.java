@@ -2,7 +2,6 @@ package co.com.flypass.f2xfinancialentity.service.impl;
 
 import co.com.flypass.f2xfinancialentity.enums.AccountStatus;
 import co.com.flypass.f2xfinancialentity.enums.AccountType;
-import co.com.flypass.f2xfinancialentity.exception.InvalidValueException;
 import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
 import co.com.flypass.f2xfinancialentity.exception.NotAllowedOperationException;
 import co.com.flypass.f2xfinancialentity.exception.NotFindException;
@@ -196,11 +195,12 @@ public class ProductServiceImpl implements ProductService {
         boolean exist = existAccountNumber(accountNumber);
         while(exist){
             accountNumber = accountNumberGenerator.generateCheckingNumber();
-            exist = existAccountNumber(accountNumber);
+            exist = this.existAccountNumber(accountNumber);
         }
         return accountNumber;
     }
 
+    @Override
     public boolean existAccountNumber(String accountNumber) {
         return productRepository.findByAccountNumber(accountNumber)
                 .isPresent();
