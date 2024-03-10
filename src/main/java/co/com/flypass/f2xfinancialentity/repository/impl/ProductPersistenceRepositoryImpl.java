@@ -51,4 +51,9 @@ public class ProductPersistenceRepositoryImpl implements ProductRepository {
     public boolean existsById(String id) {
         return productJpaRepository.existsById(id);
     }
+
+    @Override
+    public boolean existsByClientId(String clientId) {
+        return productJpaRepository.existsByClientId(clientId);
+    }
 }

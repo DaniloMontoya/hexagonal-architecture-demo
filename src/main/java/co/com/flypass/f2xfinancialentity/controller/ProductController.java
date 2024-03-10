@@ -2,7 +2,6 @@ package co.com.flypass.f2xfinancialentity.controller;
 
 import co.com.flypass.f2xfinancialentity.model.dto.ProductCreateDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductDTO;
-import co.com.flypass.f2xfinancialentity.model.dto.ProductUpdateDTO;
 import co.com.flypass.f2xfinancialentity.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -49,7 +48,6 @@ public class ProductController {
     @ApiResponse(responseCode = "200", description = "Cuando se crea el Producto correctamente", useReturnTypeSchema = true)
     @ApiResponse(responseCode = "400", description = "Cuando no se envia un dato que es requerido")
     @ApiResponse(responseCode = "404", description = "Cuando no se ecuentra el cliente + JSON cone el mensaje de error", content = {@Content(mediaType = "JSON")})
-    @ApiResponse(responseCode = "409", description = "Cuando ya existe un Producto con el número de identificación")
     @ApiResponse(responseCode = "422", description = "Cuando hay alguna restricción no valida para crear el Producto")
     @ApiResponse(responseCode = "500", description = "Cuando ocurre una excepcion inesperada al crear el Producto")
     @PostMapping("create")
@@ -57,26 +55,26 @@ public class ProductController {
         return productService.create(productCreateDTO);
     }
 
-    @Operation(summary = "Actualizar Producto", description = "Actualiza el Producto con los datos indocados")
-    @ApiResponse(responseCode = "200", description = "Cuando se actualiza el Producto correctamente", useReturnTypeSchema = true)
-    @ApiResponse(responseCode = "400", description = "Cuando no se envia un dato que es requerido")
-    @ApiResponse(responseCode = "422", description = "Cuando hay alguna restricción no valida para actualizar el Producto")
-    @ApiResponse(responseCode = "500", description = "Cuando ocurre una excepcion inesperada actualizando el Producto")
-    @PostMapping("update")
-    public ProductDTO update(@RequestBody ProductUpdateDTO productUpdateDTO){
-        return productService.update(productUpdateDTO);
-    }
-
+    @Operation(summary = "Activar Producto", description = "Activa el producto con el ID enviado")
+    @ApiResponse(responseCode = "200", description = "Cuando se activa el producto correctamente", content = {@Content(mediaType = "String")})
+    @ApiResponse(responseCode = "404", description = "Cuando no se ecuentra el producto + JSON con el mensaje de error", content = {@Content(mediaType = "JSON")})
     @PutMapping("enable/{id}")
     public String enableProduct(@PathVariable(name = "id") String id){
         return String.format(ENABLE_PRODUCT_MESSAGE, productService.enable(id));
     }
 
+    @Operation(summary = "Inactivar Producto", description = "Inactiva el producto con el ID enviado")
+    @ApiResponse(responseCode = "200", description = "Cuando se Inactiva el producto correctamente", content = {@Content(mediaType = "String")})
+    @ApiResponse(responseCode = "404", description = "Cuando no se ecuentra el producto + JSON con el mensaje de error", content = {@Content(mediaType = "JSON")})
     @PutMapping("disable/{id}")
     public String disableProduct(@PathVariable(name = "id") String id){
         return String.format(DISABLE_PRODUCT_MESSAGE, productService.disable(id));
     }
 
+    @Operation(summary = "Cancelar Producto", description = "Cancela el producto con el ID enviado")
+    @ApiResponse(responseCode = "200", description = "Cuando se Cancela el producto correctamente", content = {@Content(mediaType = "String")})
+    @ApiResponse(responseCode = "404", description = "Cuando no se ecuentra el producto + JSON con el mensaje de error", content = {@Content(mediaType = "JSON")})
+    @ApiResponse(responseCode = "405", description = "Cuando el saldo de la cuenta a cancelar no se encuentra en $0 (cero)", content = {@Content(mediaType = "JSON")})
     @PutMapping("cancel/{id}")
     public String cancelProduct(@PathVariable(name = "id") String id){
         return String.format(CANCELLED_PRODUCT_MESSAGE, productService.cancel(id));

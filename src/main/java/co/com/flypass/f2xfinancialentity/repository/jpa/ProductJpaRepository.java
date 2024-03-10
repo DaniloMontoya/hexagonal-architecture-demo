@@ -14,4 +14,6 @@ import java.util.Optional;
 @Repository
 public interface ProductJpaRepository extends JpaRepository<ProductAccountEntity, String> {
     Optional<ProductAccountEntity> findByAccountNumber(String accountNumber);
+
+    boolean existsByClientId(String id);
 }

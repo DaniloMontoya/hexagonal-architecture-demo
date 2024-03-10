@@ -21,4 +21,6 @@ public interface ProductRepository {
     ProductModel create(ProductModel productModel);
 
     boolean existsById(String id);
+
+    boolean existsByClientId(String clientId);
 }
