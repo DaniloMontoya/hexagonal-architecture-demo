@@ -16,3 +16,5 @@ logging:
   file:
     name: f2x_logs.log
     path: ${LOGS_PATH}
+  level:
+    co.com.flypass: debug
