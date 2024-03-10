@@ -35,4 +35,6 @@ public interface ProductService {
     boolean isZeroBalance(double balance);
 
     boolean existAccountNumber(String accountNumber);
+
+    ProductDTO consignment(ProductDTO destinationProduct, double amount);
 }

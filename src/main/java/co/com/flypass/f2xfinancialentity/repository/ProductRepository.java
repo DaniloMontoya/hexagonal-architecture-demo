@@ -19,6 +19,7 @@ public interface ProductRepository {
     Optional<ProductModel> findByAccountNumber(String accountNumber);
 
     ProductModel create(ProductModel productModel);
+    ProductModel update(ProductModel productModel);
 
     boolean existsById(String id);
 

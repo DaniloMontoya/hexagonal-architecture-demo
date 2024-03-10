@@ -1,8 +1,6 @@
-package co.com.flypass.f2xfinancialentity.entity;
-
+package co.com.flypass.f2xfinancialentity.model.dto.transaction;
 
 import co.com.flypass.f2xfinancialentity.enums.TransactionType;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,18 +10,13 @@ import java.time.LocalDateTime;
 /**
  * @author Ing. Danilo Montoya Hernandez;
  * Email: danilo9831montoya@gmail.com
- * @version Id: <b>j2x-financial-entity</b> 09/03/2024, 5:00 PM
+ * @version Id: <b>j2x-financial-entity</b> 10/03/2024, 12:23 PM
  **/
 @Data
-@Entity
-@Table(name = "TRANSACTION")
 @AllArgsConstructor
 @NoArgsConstructor
-public class TransactionEntity {
-    @Id
+public class TransactionDTO {
     private String id;
-
-    @Enumerated(EnumType.STRING)
     private TransactionType type;
     private String sourceAccount;
     private String destinationAccount;

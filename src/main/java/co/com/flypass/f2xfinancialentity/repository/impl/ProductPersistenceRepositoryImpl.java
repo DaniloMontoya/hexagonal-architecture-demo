@@ -48,6 +48,11 @@ public class ProductPersistenceRepositoryImpl implements ProductRepository {
     }
 
     @Override
+    public ProductModel update(ProductModel productModel) {
+        return this.create(productModel);
+    }
+
+    @Override
     public boolean existsById(String id) {
         return productJpaRepository.existsById(id);
     }

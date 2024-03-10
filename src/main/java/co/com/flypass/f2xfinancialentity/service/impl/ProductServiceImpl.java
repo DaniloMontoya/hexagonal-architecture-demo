@@ -16,6 +16,7 @@ import co.com.flypass.f2xfinancialentity.service.ProductService;
 import co.com.flypass.f2xfinancialentity.service.ValidateClientExist;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -204,5 +205,15 @@ public class ProductServiceImpl implements ProductService {
     public boolean existAccountNumber(String accountNumber) {
         return productRepository.findByAccountNumber(accountNumber)
                 .isPresent();
+    }
+
+    @Transactional
+    @Override
+    public ProductDTO consignment(ProductDTO destinationProduct, double amount) {
+        var productBuilder = new ProductBuilder(destinationProduct);
+        productBuilder.withModificationDate(LocalDateTime.now());
+        productBuilder.withBalance(destinationProduct.getBalance() + amount);
+        var productModel = productRepository.update(productBuilder.build());
+        return productMapper.modelToDto(productModel);
     }
 }
