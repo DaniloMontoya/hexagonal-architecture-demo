@@ -15,7 +15,7 @@ public interface ClientService {
     ClientDTO create(ClientCreateDTO clientCreateDTO);
     ClientDTO update(ClientUpdateDTO clientCreateDTO);
     List<ClientDTO> findAll();
-    ClientDTO findOne(String id);
+    ClientDTO findClientById(String id);
     void delete(String id);
 
 }

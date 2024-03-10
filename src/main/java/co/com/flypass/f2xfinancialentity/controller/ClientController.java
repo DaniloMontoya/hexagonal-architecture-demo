@@ -27,7 +27,7 @@ public class ClientController {
 
     @GetMapping("clientById/{id}")
     public ClientDTO findById(@PathVariable(name = "id") String id){
-        return clientService.findOne(id);
+        return clientService.findClientById(id);
     }
 
     @PostMapping("create")

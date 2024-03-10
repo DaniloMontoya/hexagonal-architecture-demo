@@ -2,7 +2,9 @@ package co.com.flypass.f2xfinancialentity.entity;
 
 import co.com.flypass.f2xfinancialentity.enums.IdentificationType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "CLIENT")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ClientEntity {
     @Id
     private String id;

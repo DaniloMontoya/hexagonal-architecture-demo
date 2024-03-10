@@ -4,6 +4,7 @@ import co.com.flypass.f2xfinancialentity.enums.IdentificationType;
 import co.com.flypass.f2xfinancialentity.exception.InvalidValueException;
 import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -31,7 +32,9 @@ public class ClientModel {
     private String lastname;
     private String email;
     private LocalDate birthday;
+    @Setter
     private LocalDateTime creationDate;
+    @Setter
     private LocalDateTime modificationDate;
 
     public ClientModel(String id, IdentificationType identificationType, String identificationNumber,

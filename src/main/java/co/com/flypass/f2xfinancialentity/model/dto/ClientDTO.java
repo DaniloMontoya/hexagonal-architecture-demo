@@ -1,7 +1,7 @@
 package co.com.flypass.f2xfinancialentity.model.dto;
 
 import co.com.flypass.f2xfinancialentity.enums.IdentificationType;
-import lombok.Builder;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
  * @version Id: <b>j2x-financial-entity</b> 09/03/2024, 6:58 PM
  **/
 @Data
-@Builder
+@AllArgsConstructor
 public class ClientDTO {
     private String id;
     private IdentificationType identificationType;
