@@ -1,8 +1,6 @@
 package co.com.flypass.f2xfinancialentity.service.impl;
 
-import co.com.flypass.f2xfinancialentity.model.dto.ClientCreateDTO;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 

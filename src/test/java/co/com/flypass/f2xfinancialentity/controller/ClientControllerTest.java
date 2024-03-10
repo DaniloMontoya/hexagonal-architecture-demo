@@ -64,7 +64,4 @@ class ClientControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @Test
-    void delete() {
-    }
 }
