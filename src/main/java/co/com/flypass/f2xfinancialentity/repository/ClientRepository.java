@@ -17,4 +17,6 @@ public interface ClientRepository {
     ClientModel updateClient(ClientModel client);
     void deleteClient(String id);
     boolean existClient(String id);
+
+    boolean existClientByDocumentNumber(String identificationNumber);
 }

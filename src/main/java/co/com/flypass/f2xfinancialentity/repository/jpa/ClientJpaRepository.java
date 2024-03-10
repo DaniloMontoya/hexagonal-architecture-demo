@@ -11,4 +11,5 @@ import org.springframework.stereotype.Repository;
  **/
 @Repository
 public interface ClientJpaRepository extends JpaRepository<ClientEntity, String> {
+    boolean existsByIdentificationNumber(String identificationNumber);
 }

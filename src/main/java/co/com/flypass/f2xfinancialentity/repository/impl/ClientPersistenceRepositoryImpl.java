@@ -44,8 +44,7 @@ public class ClientPersistenceRepositoryImpl implements ClientRepository {
 
     @Override
     public ClientModel updateClient(ClientModel client) {
-        var clientEntity = clientBuilder.modelToEntity(client);
-        return clientBuilder.entityToModel(clientJpaRepository.save(clientEntity));
+        return this.createClient(client);
     }
 
     @Override
@@ -56,5 +55,10 @@ public class ClientPersistenceRepositoryImpl implements ClientRepository {
     @Override
     public boolean existClient(String id) {
         return clientJpaRepository.existsById(id);
+    }
+
+    @Override
+    public boolean existClientByDocumentNumber(String identificationNumber) {
+        return clientJpaRepository.existsByIdentificationNumber(identificationNumber);
     }
 }

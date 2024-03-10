@@ -38,7 +38,8 @@ public class ClientModel {
     private LocalDateTime modificationDate;
 
     public ClientModel(String id, IdentificationType identificationType, String identificationNumber,
-                       String name, String lastname, String email, LocalDate birthday, LocalDateTime creationDate){
+                       String name, String lastname, String email, LocalDate birthday, LocalDateTime creationDate,
+                       LocalDateTime modificationDate){
         validateBirthday(birthday);
         validateEmail(email);
         validateNameLastName(name);
@@ -50,8 +51,8 @@ public class ClientModel {
         this.lastname = lastname;
         this.identificationType = identificationType;
         this.identificationNumber = identificationNumber;
-        this.creationDate = creationDate;
-        this.modificationDate = LocalDateTime.now();
+        this.creationDate = null == creationDate ? LocalDateTime.now() : creationDate;
+        this.modificationDate = null == modificationDate ? LocalDateTime.now() : modificationDate;
     }
 
     private String generateId(String id) {

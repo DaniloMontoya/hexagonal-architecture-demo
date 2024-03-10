@@ -1,5 +1,6 @@
-package co.com.flypass.f2xfinancialentity.service;
+package co.com.flypass.f2xfinancialentity.service.impl;
 
+import co.com.flypass.f2xfinancialentity.exception.DuplicityValueException;
 import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
 import co.com.flypass.f2xfinancialentity.exception.NotAllowedOperationException;
 import co.com.flypass.f2xfinancialentity.exception.NotFindException;
@@ -9,6 +10,8 @@ import co.com.flypass.f2xfinancialentity.model.dto.ClientCreateDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ClientDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ClientUpdateDTO;
 import co.com.flypass.f2xfinancialentity.repository.ClientRepository;
+import co.com.flypass.f2xfinancialentity.service.ClientService;
+import co.com.flypass.f2xfinancialentity.service.ValidateProductsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,15 +36,23 @@ public class ClientServiceImpl implements ClientService {
     @Override
     public ClientDTO create(ClientCreateDTO clientCreateDTO) {
         ClientModel clientModel = clientBuilder.createDtoToModel(clientCreateDTO);
+        boolean exist = clientRepository.existClientByDocumentNumber(clientModel.getIdentificationNumber());
+        if(exist){
+            throw new DuplicityValueException("Ya existe un cliente con el número de documento");
+        }
         clientModel.setCreationDate(LocalDateTime.now());
         clientModel.setModificationDate(LocalDateTime.now());
         return clientBuilder.modelToDto(clientRepository.createClient(clientModel));
     }
 
     @Override
-    public ClientDTO update(ClientUpdateDTO clientCreateDTO) {
-        ClientModel clientModel = clientBuilder.updateDtoToModel(clientCreateDTO);
+    public ClientDTO update(ClientUpdateDTO clientUpdateDTO) {
+        var savedClient = clientRepository.getClient(clientUpdateDTO.getId())
+                .orElseThrow(()-> new NotFindException(NOT_FIND_CLIENT_MESSAGE + clientUpdateDTO.getId()));
+
+        ClientModel clientModel = clientBuilder.updateDtoToModel(clientUpdateDTO);
         clientModel.setModificationDate(LocalDateTime.now());
+        clientModel.setCreationDate(savedClient.getCreationDate());
         return clientBuilder.modelToDto(clientRepository.updateClient(clientModel));
     }
 

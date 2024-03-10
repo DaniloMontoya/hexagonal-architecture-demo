@@ -35,7 +35,8 @@ public class ClientBuilder {
                 clientCreateDTO.getLastname(),
                 clientCreateDTO.getEmail(),
                 clientCreateDTO.getBirthday(),
-                LocalDateTime.now()
+                null,
+                null
         );
     }
 
@@ -68,7 +69,8 @@ public class ClientBuilder {
                 clientUpdateDTO.getLastname(),
                 clientUpdateDTO.getEmail(),
                 clientUpdateDTO.getBirthday(),
-                LocalDateTime.now()
+                null,
+                null
         );
     }
 
@@ -76,7 +78,7 @@ public class ClientBuilder {
         if (null == clientEntity) {
             throw new MandatoryValueException(CLIENT_ENTITY_IS_NULL);
         }
-        //TODO: Corregir fecha de actualizacion
+
         return new ClientModel(clientEntity.getId(),
                 clientEntity.getIdentificationType(),
                 clientEntity.getIdentificationNumber(),
@@ -84,7 +86,8 @@ public class ClientBuilder {
                 clientEntity.getLastname(),
                 clientEntity.getEmail(),
                 clientEntity.getBirthday(),
-                clientEntity.getCreationDate()
+                clientEntity.getCreationDate(),
+                clientEntity.getModificationDate()
         );
     }
 
