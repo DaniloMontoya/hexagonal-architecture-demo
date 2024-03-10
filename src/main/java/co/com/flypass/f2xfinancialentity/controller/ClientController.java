@@ -43,6 +43,7 @@ public class ClientController {
     @Operation(summary = "Crear Cliente", description = "Crea un nuevo cliente en el sistema")
     @ApiResponse(responseCode = "200", description = "Cuando se crea el Cliente correctamente", useReturnTypeSchema = true)
     @ApiResponse(responseCode = "400", description = "Cuando no se envia un dato que es requerido")
+    @ApiResponse(responseCode = "404", description = "Cuando no encuentra el cliente para actualizar")
     @ApiResponse(responseCode = "409", description = "Cuando ya existe un Cliente con el número de identificación")
     @ApiResponse(responseCode = "422", description = "Cuando hay alguna restricción no valida para crear el cliente")
     @ApiResponse(responseCode = "500", description = "Cuando ocurre una excepcion inesperada al crear el Cliente")
@@ -61,6 +62,11 @@ public class ClientController {
         return clientService.update(clientUpdateDTO);
     }
 
+    @Operation(summary = "Eliminar Cliente", description = "Elimina el cliente por ID")
+    @ApiResponse(responseCode = "200", description = "Cuando se elimina el Cliente correctamente")
+    @ApiResponse(responseCode = "404", description = "Cuando no encuentra el cliente")
+    @ApiResponse(responseCode = "405", description = "Cuando el cliente tiene productos asociados")
+    @ApiResponse(responseCode = "500", description = "Cuando ocurre una excepcion inesperada")
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable(name = "id") String id){
         clientService.delete(id);
