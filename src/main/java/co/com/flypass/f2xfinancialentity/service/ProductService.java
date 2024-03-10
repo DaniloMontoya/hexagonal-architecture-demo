@@ -2,7 +2,6 @@ package co.com.flypass.f2xfinancialentity.service;
 
 import co.com.flypass.f2xfinancialentity.model.dto.ProductCreateDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductDTO;
-import co.com.flypass.f2xfinancialentity.model.dto.ProductUpdateDTO;
 
 import java.util.List;
 
@@ -19,8 +18,6 @@ public interface ProductService {
     ProductDTO findByAccountNumber(String accountNumber);
 
     ProductDTO create(ProductCreateDTO productCreateDTO);
-
-    ProductDTO update(ProductUpdateDTO productUpdateDTO);
 
     String enable(String id);
 

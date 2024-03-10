@@ -4,6 +4,7 @@ import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
 import co.com.flypass.f2xfinancialentity.exception.NotFindException;
 import co.com.flypass.f2xfinancialentity.repository.ClientRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Service;
  * Email: danilo9831montoya@gmail.com
  * @version Id: <b>j2x-financial-entity</b> 10/03/2024, 9:24 AM
  **/
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ValidateClientExist {
@@ -19,10 +21,12 @@ public class ValidateClientExist {
     private final ClientRepository clientRepository;
     public void existClientById(String clientId){
         if(null == clientId){
+            log.error("Required client id");
             throw new MandatoryValueException(REQUIRED_CLIENT_ID_MESSAGE);
         }
         boolean exist = clientRepository.existClient(clientId);
         if(!exist){
+            log.error("Not find client with id: {}", clientId);
             throw new NotFindException(NOT_EXIST_CLIENT_MESSAGE);
         }
     }

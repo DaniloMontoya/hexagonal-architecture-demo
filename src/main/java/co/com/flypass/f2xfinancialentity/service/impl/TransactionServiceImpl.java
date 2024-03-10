@@ -14,6 +14,7 @@ import co.com.flypass.f2xfinancialentity.service.ProductService;
 import co.com.flypass.f2xfinancialentity.service.ProductTransactionService;
 import co.com.flypass.f2xfinancialentity.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +26,7 @@ import java.util.List;
  * Email: danilo9831montoya@gmail.com
  * @version Id: <b>j2x-financial-entity</b> 10/03/2024, 12:41 PM
  **/
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
@@ -39,7 +41,9 @@ public class TransactionServiceImpl implements TransactionService {
     @Transactional
     @Override
     public TransactionDTO consignment(ConsignmentDTO consignmentDTO) {
+        log.debug("Consignment in process ... {}", consignmentDTO);
         if (null == consignmentDTO) {
+            log.error("Required consignment DTO");
             throw new MandatoryValueException(REQUIRED_FIELDS_MESSAGE);
         }
         validateTransactionAmount(consignmentDTO.getAmount());
@@ -51,17 +55,23 @@ public class TransactionServiceImpl implements TransactionService {
                 .withAmount(consignmentDTO.getAmount())
                 .withTransactionDate(LocalDateTime.now())
                 .build();
-        return transactionMapper.modelToDTO(transactionRepository.save(transactionModel));
+        var savedTransaction = transactionRepository.save(transactionModel);
+        log.info("Confirm Consignment transaction: {}", savedTransaction);
+        return transactionMapper.modelToDTO(savedTransaction);
     }
 
     public void validateTransactionAmount(double amount) {
+        log.debug("Validating transaction amount ...");
         if (amount < 1) {
+            log.error("Not allowed transaction with $0 (zero) amount");
             throw new NotAllowedOperationException(TRANSACTION_AMOUNT_MUST_MAYOR_ZERO_MESSAGE);
         }
     }
 
+    @Transactional
     @Override
     public TransactionDTO withdrawal(WithdrawalDTO withdrawalDTO) {
+        log.debug("withdrawal in process ... {}", withdrawalDTO);
         if (null == withdrawalDTO) {
             throw new MandatoryValueException(REQUIRED_FIELDS_MESSAGE);
         }
@@ -74,11 +84,14 @@ public class TransactionServiceImpl implements TransactionService {
                 .withAmount(withdrawalDTO.getAmount())
                 .withTransactionDate(LocalDateTime.now())
                 .build();
-        return transactionMapper.modelToDTO(transactionRepository.save(transactionModel));
+        var savedTransaction = transactionRepository.save(transactionModel);
+        log.info("Confirm Withdrawal transaction: {}", savedTransaction);
+        return transactionMapper.modelToDTO(savedTransaction);
     }
 
     @Override
     public TransactionDTO transferBetweenAccounts(TransferAccountDTO transferAccountDTO) {
+        log.debug("Transfer between accounts in process ... {}", transferAccountDTO);
         if (null == transferAccountDTO) {
             throw new MandatoryValueException(REQUIRED_FIELDS_MESSAGE);
         }
@@ -94,7 +107,9 @@ public class TransactionServiceImpl implements TransactionService {
                 .withTransactionDate(LocalDateTime.now())
                 .build();
 
-        return transactionMapper.modelToDTO(transactionRepository.save(transactionModel));
+        var savedTransaction = transactionRepository.save(transactionModel);
+        log.info("Confirm Transfer between accounts transaction: {}", savedTransaction);
+        return transactionMapper.modelToDTO(savedTransaction);
     }
 
     @Override

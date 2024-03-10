@@ -9,14 +9,13 @@ import co.com.flypass.f2xfinancialentity.mapper.ProductMapper;
 import co.com.flypass.f2xfinancialentity.model.builder.ProductBuilder;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductCreateDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductDTO;
-import co.com.flypass.f2xfinancialentity.model.dto.ProductUpdateDTO;
 import co.com.flypass.f2xfinancialentity.repository.ProductRepository;
 import co.com.flypass.f2xfinancialentity.service.AccountNumberGenerator;
 import co.com.flypass.f2xfinancialentity.service.ProductService;
 import co.com.flypass.f2xfinancialentity.service.ValidateClientExist;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +26,7 @@ import java.util.List;
  * Email: danilo9831montoya@gmail.com
  * @version Id: <b>j2x-financial-entity</b> 10/03/2024, 8:50 AM
  **/
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
@@ -44,6 +44,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductDTO> findAll() {
+        log.debug("Finding all products...");
         return productRepository.findAll()
                 .stream()
                 .map(productMapper::modelToDto)
@@ -52,7 +53,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO findById(String id) {
+        log.debug("Finding product by Id... {}", id);
         if(null == id){
+            log.error("Error to find product, required id");
             throw new MandatoryValueException(REQUIRED_PRODUCT_ID_MESSAGE);
         }
 
@@ -64,7 +67,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO findByAccountNumber(String accountNumber) {
+        log.debug("Finding product by Account Number... {}", accountNumber);
         if(null == accountNumber){
+            log.error("Required account number");
             throw new MandatoryValueException(REQUIRED_ACCOUNT_NUMBER_MESSAGE);
         }
 
@@ -76,18 +81,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public ProductDTO create(ProductCreateDTO productCreateDTO) {
+        log.debug("Creating product... {}", productCreateDTO);
         validateClientExist.existClientById(productCreateDTO.getClientId());
         var productBuilder = createBuilderProduct(productCreateDTO);
         var productModel = productRepository.create(productBuilder.build());
+        log.info("Product created {}", productModel);
         return productMapper.modelToDto(productModel);
     }
 
     public ProductBuilder createBuilderProduct(ProductCreateDTO productCreateDTO){
         if(AccountType.SAVING.equals(productCreateDTO.getType())){
+            log.debug("Creating product: Saving Account...");
             return createSavingAccount(productCreateDTO);
         }else if (AccountType.CHECKING.equals(productCreateDTO.getType())){
+            log.debug("Creating product: Checking Account...");
             return createCheckingAccount(productCreateDTO);
         }else{
+            log.error("Not allowed to create other Account Type");
             throw new NotAllowedOperationException(NOT_ALLOWED_PRODUCT_TYPE_MESSAGE);
         }
     }
@@ -119,34 +129,34 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO update(ProductUpdateDTO productUpdateDTO) {
-        return null;
-    }
-
-    @Override
     public String enable(String id) {
+        log.debug("Enable account... {}", id);
         validateAccountExist(id);
         var productDTO = findById(id);
         var productBuilder = new ProductBuilder(productDTO);
         productBuilder.withStatus(AccountStatus.ACTIVE);
         productBuilder.withModificationDate(LocalDateTime.now());
         var productModel = productRepository.create(productBuilder.build());
+        log.info("Enabled account {}", productModel);
         return productMapper.modelToDto(productModel).getAccountNumber();
     }
 
     @Override
     public String disable(String id) {
+        log.debug("Disable account... {}", id);
         validateAccountExist(id);
         var productDTO = findById(id);
         var productBuilder = new ProductBuilder(productDTO);
         productBuilder.withStatus(AccountStatus.INACTIVE);
         productBuilder.withModificationDate(LocalDateTime.now());
         var productModel = productRepository.create(productBuilder.build());
+        log.info("Disabled account {}", productModel);
         return productMapper.modelToDto(productModel).getAccountNumber();
     }
 
     @Override
     public String cancel(String id) {
+        log.debug("Canceling account... {}", id);
         validateAccountExist(id);
         var productDTO = findById(id);
         validateZeroProductBalance(productDTO.getBalance());
@@ -154,12 +164,14 @@ public class ProductServiceImpl implements ProductService {
         productBuilder.withStatus(AccountStatus.CANCELLED);
         productBuilder.withModificationDate(LocalDateTime.now());
         var productModel = productRepository.create(productBuilder.build());
+        log.debug("Cancelled account... {}", productModel);
         return productMapper.modelToDto(productModel).getAccountNumber();
     }
 
     @Override
     public void validateZeroProductBalance(double balance) {
         if(!isZeroBalance(balance)){
+            log.error("Account must balance to Zero for Cancel");
             throw new NotAllowedOperationException(NOT_ZERO_BALANCE_ACCOUNT_MESSAGE);
         }
     }
@@ -167,10 +179,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void validateAccountExist(String id) {
         if(null == id){
+            log.error("Required account with id: {}", id);
             throw new MandatoryValueException(REQUIRED_ACCOUNT_ID_MESSAGE);
         }
 
         if(!productRepository.existsById(id)){
+            log.error("Not find account with id: {}", id);
             throw new NotFindException(NOT_FOUND_ACCOUNT_MESSAGE);
         }
     }
@@ -182,22 +196,26 @@ public class ProductServiceImpl implements ProductService {
 
 
     public String generateValidSavingAccountNumber() {
+        log.debug("Generating Saving Account number...");
         String accountNumber = accountNumberGenerator.generateSavingNumber();
         boolean exist = existAccountNumber(accountNumber);
         while(exist){
             accountNumber = accountNumberGenerator.generateSavingNumber();
             exist = existAccountNumber(accountNumber);
         }
+        log.debug("Creating Saving Account... {}", accountNumber);
         return accountNumber;
     }
 
     public String generateValidCheckingAccountNumber() {
+        log.debug("Generating Checking Account number...");
         String accountNumber = accountNumberGenerator.generateCheckingNumber();
         boolean exist = existAccountNumber(accountNumber);
         while(exist){
             accountNumber = accountNumberGenerator.generateCheckingNumber();
             exist = this.existAccountNumber(accountNumber);
         }
+        log.debug("Creating Checking Account... {}", accountNumber);
         return accountNumber;
     }
 
