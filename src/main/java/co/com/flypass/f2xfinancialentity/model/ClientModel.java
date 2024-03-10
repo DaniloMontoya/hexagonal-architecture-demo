@@ -22,6 +22,12 @@ public class ClientModel {
 
     public static final Pattern VALID_EMAIL_ADDRESS_REGEX =
             Pattern.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+    public static final String BIRTHDAY_REQUIRED_MESSAGE = "Se debe enviar el campo fecha nacimiento";
+    public static final String CLIENT_MAJOR_18_YEARS_OLD_MESSAGE = "El cliente debe ser mayor de 18 años";
+    public static final String REQUIRED_EMAIL_MESSAGE = "El correo es requerido";
+    public static final String INVALID_EMAIL_MESSAGE = "Debe ingresar un correo valido";
+    public static final String MANDATORY_NAME_MESSAGE = "El nombre y apellido es obligatorio";
+    public static final String INVALID_NAME_MESSAGE = "El nombre y apellido debe tener más de 2 letras";
 
     private String id;
     private IdentificationType identificationType;
@@ -64,29 +70,29 @@ public class ClientModel {
 
     public void validateBirthday(LocalDate localDate){
         if(null == localDate){
-            throw new InvalidValueException("Se debe enviar el campo fecha nacimiento");
+            throw new InvalidValueException(BIRTHDAY_REQUIRED_MESSAGE);
         }
         if(localDate.plusYears(18).isAfter(LocalDate.now())){
-            throw new InvalidValueException("El cliente debe ser mayor de 18 años");
+            throw new InvalidValueException(CLIENT_MAJOR_18_YEARS_OLD_MESSAGE);
         }
     }
 
     public void validateEmail(String email){
         if(null == email){
-            throw new MandatoryValueException("El correo es requerido");
+            throw new MandatoryValueException(REQUIRED_EMAIL_MESSAGE);
         }
         Matcher matcher = VALID_EMAIL_ADDRESS_REGEX.matcher(email);
         if(!matcher.matches()){
-            throw new InvalidValueException("Debe ingresar un correo valido");
+            throw new InvalidValueException(INVALID_EMAIL_MESSAGE);
         }
     }
 
     public void validateNameLastName(String value){
         if(null == value){
-            throw new MandatoryValueException("El nombre y apellido es obligatorio");
+            throw new MandatoryValueException(MANDATORY_NAME_MESSAGE);
         }
         if(value.trim().length() < 3){
-            throw new InvalidValueException("El nombre y apellido debe tener más de 2 letras");
+            throw new InvalidValueException(INVALID_NAME_MESSAGE);
         }
     }
 }

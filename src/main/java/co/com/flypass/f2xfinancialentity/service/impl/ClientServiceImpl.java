@@ -29,6 +29,7 @@ public class ClientServiceImpl implements ClientService {
     public static final String REQUIRED_CLIENT_ID_MESSAGE = "Id del cliente requerido";
     public static final String CLIENT_HAVE_PRODUCTS = "El cliente tiene productos con la entidad";
     public static final String NOT_FIND_CLIENT_MESSAGE = "No existe cliente con el id:";
+    public static final String EXIST_CLIENT_WITH_DOCUMENT_NUMBER = "Ya existe un cliente con el número de documento";
     private final ClientRepository clientRepository;
     private final ClientBuilder clientBuilder;
     private final ValidateProductsService validateProductsService;
@@ -38,7 +39,7 @@ public class ClientServiceImpl implements ClientService {
         ClientModel clientModel = clientBuilder.createDtoToModel(clientCreateDTO);
         boolean exist = clientRepository.existClientByDocumentNumber(clientModel.getIdentificationNumber());
         if(exist){
-            throw new DuplicityValueException("Ya existe un cliente con el número de documento");
+            throw new DuplicityValueException(EXIST_CLIENT_WITH_DOCUMENT_NUMBER);
         }
         clientModel.setCreationDate(LocalDateTime.now());
         clientModel.setModificationDate(LocalDateTime.now());
