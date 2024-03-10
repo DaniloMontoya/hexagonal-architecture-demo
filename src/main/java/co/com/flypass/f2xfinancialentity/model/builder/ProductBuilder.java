@@ -4,6 +4,7 @@ import co.com.flypass.f2xfinancialentity.enums.AccountStatus;
 import co.com.flypass.f2xfinancialentity.enums.AccountType;
 import co.com.flypass.f2xfinancialentity.model.ProductModel;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductCreateDTO;
+import co.com.flypass.f2xfinancialentity.model.dto.ProductDTO;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -28,6 +29,17 @@ public class ProductBuilder {
     public ProductBuilder(ProductCreateDTO productCreateDTO) {
         this.type = productCreateDTO.getType();
         this.clientId = productCreateDTO.getClientId();
+    }
+    public ProductBuilder(ProductDTO productDTO) {
+        this.id= productDTO.getId();
+        this.type = productDTO.getType();
+        this.clientId = productDTO.getClientId();
+        this.accountNumber = productDTO.getAccountNumber();
+        this.status = productDTO.getStatus();
+        this.balance = productDTO.getBalance();
+        this.excludeGMF = productDTO.isExcludeGMF();
+        this.creationDate = productDTO.getCreationDate();
+        this.modificationDate = productDTO.getModificationDate();
     }
 
     public ProductBuilder withId(String id) {

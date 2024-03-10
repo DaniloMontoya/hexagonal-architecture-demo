@@ -5,6 +5,7 @@ import co.com.flypass.f2xfinancialentity.enums.AccountStatus;
 import co.com.flypass.f2xfinancialentity.enums.AccountType;
 import co.com.flypass.f2xfinancialentity.exception.InvalidValueException;
 import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
+import co.com.flypass.f2xfinancialentity.exception.NotAllowedOperationException;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -22,6 +23,7 @@ public class ProductModel {
     public static final String REQUIRED_ACCOUNT_NUMBER_MESSAGE = "Número de cuenta requerido";
     public static final String NOT_VALID_ACCOUNT_NUMBER_MESSAGE = "Número de cuenta no valido";
     public static final int ACCOUNT_NUM_DIGITS = 10;
+    public static final String MIN_BALANCE_SAVING_ACCOUNT_MESSAGE = "La cuenta de ahorros no puede tener un saldo menor a $0 (cero)";
     private String id;
     private AccountType type;
     private String accountNumber;
@@ -35,6 +37,7 @@ public class ProductModel {
     public ProductModel(String id, AccountType type, String accountNumber, AccountStatus status, double balance,
                         boolean excludeGMF, LocalDateTime creationDate, LocalDateTime modificationDate, String clientId){
         validateAccountNumber(accountNumber);
+        validateSavingBalance(balance, type);
         this.accountNumber=accountNumber;
         this.id = generateId(id);
         this.type = type;
@@ -44,6 +47,12 @@ public class ProductModel {
         this.creationDate = creationDate;
         this.modificationDate = modificationDate;
         this.clientId = clientId;
+    }
+
+    private void validateSavingBalance(double balance, AccountType type) {
+        if(AccountType.SAVING.equals(type) && balance < 0){
+            throw new NotAllowedOperationException(MIN_BALANCE_SAVING_ACCOUNT_MESSAGE);
+        }
     }
 
     private void validateAccountNumber(String accountNumber) {

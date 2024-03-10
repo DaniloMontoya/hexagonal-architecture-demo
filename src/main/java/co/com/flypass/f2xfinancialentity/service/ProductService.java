@@ -27,7 +27,11 @@ public interface ProductService {
 
     String disable(String id);
 
-    boolean isZeroBalance(double balance);
+    String cancel(String id);
 
-    void validateAccountNumber() throws InvalidValueException;
+    void validateZeroProductBalance(double balance);
+
+    void validateAccountExist(String id);
+
+    boolean isZeroBalance(double balance);
 }

@@ -1,7 +1,5 @@
 package co.com.flypass.f2xfinancialentity.controller;
 
-import co.com.flypass.f2xfinancialentity.model.dto.ClientDTO;
-
 import co.com.flypass.f2xfinancialentity.model.dto.ProductCreateDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ProductUpdateDTO;
@@ -10,7 +8,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.SchemaProperty;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -27,6 +24,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
+    public static final String DISABLE_PRODUCT_MESSAGE = "Producto Inactivado: %s";
+    public static final String ENABLE_PRODUCT_MESSAGE = "Producto Activado: %s";
+    public static final String CANCELLED_PRODUCT_MESSAGE = "Producto cancelado correctamente: %s";
     private final ProductService productService;
 
     @Operation(summary = "Listar Productos", description = "Obtiene la lista de todos los Productos registrados")
@@ -69,11 +69,16 @@ public class ProductController {
 
     @PutMapping("enable/{id}")
     public String enableProduct(@PathVariable(name = "id") String id){
-        return productService.enable(id);
+        return String.format(ENABLE_PRODUCT_MESSAGE, productService.enable(id));
     }
 
     @PutMapping("disable/{id}")
     public String disableProduct(@PathVariable(name = "id") String id){
-        return productService.disable(id);
+        return String.format(DISABLE_PRODUCT_MESSAGE, productService.disable(id));
+    }
+
+    @PutMapping("cancel/{id}")
+    public String cancelProduct(@PathVariable(name = "id") String id){
+        return String.format(CANCELLED_PRODUCT_MESSAGE, productService.cancel(id));
     }
 }

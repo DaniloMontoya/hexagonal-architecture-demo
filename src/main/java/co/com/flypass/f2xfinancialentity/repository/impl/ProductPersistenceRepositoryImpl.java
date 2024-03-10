@@ -46,4 +46,9 @@ public class ProductPersistenceRepositoryImpl implements ProductRepository {
         var entity = productMapper.modelToEntity(productModel);
         return productMapper.entityToModel(productJpaRepository.save(entity));
     }
+
+    @Override
+    public boolean existsById(String id) {
+        return productJpaRepository.existsById(id);
+    }
 }

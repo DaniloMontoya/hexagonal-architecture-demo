@@ -34,6 +34,9 @@ public class ProductServiceImpl implements ProductService {
     public static final String NOT_FIND_PRODUCT_MESSAGE = "No se encontro el producto";
     public static final String REQUIRED_ACCOUNT_NUMBER_MESSAGE = "Número de cuenta requerido";
     public static final String NOT_ALLOWED_PRODUCT_TYPE_MESSAGE = "No se puede crear el tipo de producto";
+    public static final String REQUIRED_ACCOUNT_ID_MESSAGE = "Id de cuenta requerido";
+    public static final String NOT_FOUND_ACCOUNT_MESSAGE = "No existe la cuenta";
+    public static final String NOT_ZERO_BALANCE_ACCOUNT_MESSAGE = "El saldo de la cuenta debe ser 0";
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
     private final ValidateClientExist validateClientExist;
@@ -122,17 +125,59 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public String enable(String id) {
-        return null;
+        validateAccountExist(id);
+        var productDTO = findById(id);
+        var productBuilder = new ProductBuilder(productDTO);
+        productBuilder.withStatus(AccountStatus.ACTIVE);
+        productBuilder.withModificationDate(LocalDateTime.now());
+        var productModel = productRepository.create(productBuilder.build());
+        return productMapper.modelToDto(productModel).getAccountNumber();
     }
 
     @Override
     public String disable(String id) {
-        return null;
+        validateAccountExist(id);
+        var productDTO = findById(id);
+        var productBuilder = new ProductBuilder(productDTO);
+        productBuilder.withStatus(AccountStatus.INACTIVE);
+        productBuilder.withModificationDate(LocalDateTime.now());
+        var productModel = productRepository.create(productBuilder.build());
+        return productMapper.modelToDto(productModel).getAccountNumber();
+    }
+
+    @Override
+    public String cancel(String id) {
+        validateAccountExist(id);
+        var productDTO = findById(id);
+        validateZeroProductBalance(productDTO.getBalance());
+        var productBuilder = new ProductBuilder(productDTO);
+        productBuilder.withStatus(AccountStatus.CANCELLED);
+        productBuilder.withModificationDate(LocalDateTime.now());
+        var productModel = productRepository.create(productBuilder.build());
+        return productMapper.modelToDto(productModel).getAccountNumber();
+    }
+
+    @Override
+    public void validateZeroProductBalance(double balance) {
+        if(!isZeroBalance(balance)){
+            throw new NotAllowedOperationException(NOT_ZERO_BALANCE_ACCOUNT_MESSAGE);
+        }
+    }
+
+    @Override
+    public void validateAccountExist(String id) {
+        if(null == id){
+            throw new MandatoryValueException(REQUIRED_ACCOUNT_ID_MESSAGE);
+        }
+
+        if(!productRepository.existsById(id)){
+            throw new NotFindException(NOT_FOUND_ACCOUNT_MESSAGE);
+        }
     }
 
     @Override
     public boolean isZeroBalance(double balance) {
-        return false;
+        return balance == 0;
     }
 
 
@@ -159,10 +204,5 @@ public class ProductServiceImpl implements ProductService {
     public boolean existAccountNumber(String accountNumber) {
         return productRepository.findByAccountNumber(accountNumber)
                 .isPresent();
-    }
-
-    @Override
-    public void validateAccountNumber() throws InvalidValueException {
-
     }
 }
