@@ -22,7 +22,6 @@ import java.time.LocalDateTime;
 public class TransactionEntity {
     @Id
     private String id;
-
     @Enumerated(EnumType.STRING)
     private TransactionType type;
     private String sourceAccount;

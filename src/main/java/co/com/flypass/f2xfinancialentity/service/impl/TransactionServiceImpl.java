@@ -31,7 +31,6 @@ public class TransactionServiceImpl implements TransactionService {
 
     public static final String REQUIRED_FIELDS_MESSAGE = "Campos requeridos";
     public static final String TRANSACTION_AMOUNT_MUST_MAYOR_ZERO_MESSAGE = "El valor de la transacción debe se mayor de $0 (cero)";
-    public static final String FONDOS_INSUFICIENTES_MESSAGE = "Fondos insuficientes";
     private final TransactionRepository transactionRepository;
     private final ProductService productService;
     private final ProductTransactionService productTransactionService;
@@ -80,7 +79,22 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Override
     public TransactionDTO transferBetweenAccounts(TransferAccountDTO transferAccountDTO) {
-        return null;
+        if (null == transferAccountDTO) {
+            throw new MandatoryValueException(REQUIRED_FIELDS_MESSAGE);
+        }
+        var sourceProduct = productService.findByAccountNumber(transferAccountDTO.getSourceAccount());
+        var destinationProduct = productService.findByAccountNumber(transferAccountDTO.getDestinationAccount());
+        productTransactionService.withdrawal(sourceProduct, transferAccountDTO.getAmount());
+        productTransactionService.consignment(destinationProduct, transferAccountDTO.getAmount());
+        var transactionModel = new TransactionBuilder()
+                .withType(TransactionType.TRANSFER_ACCOUNTS)
+                .withSourceAccount(transferAccountDTO.getSourceAccount())
+                .withDestinationAccount(transferAccountDTO.getDestinationAccount())
+                .withAmount(transferAccountDTO.getAmount())
+                .withTransactionDate(LocalDateTime.now())
+                .build();
+
+        return transactionMapper.modelToDTO(transactionRepository.save(transactionModel));
     }
 
     @Override
