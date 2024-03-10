@@ -1,12 +1,10 @@
 package co.com.flypass.f2xfinancialentity.model;
 
-import co.com.flypass.f2xfinancialentity.entity.ClientEntity;
 import co.com.flypass.f2xfinancialentity.enums.AccountStatus;
 import co.com.flypass.f2xfinancialentity.enums.AccountType;
 import co.com.flypass.f2xfinancialentity.exception.InvalidValueException;
 import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
 import co.com.flypass.f2xfinancialentity.exception.NotAllowedOperationException;
-import jakarta.persistence.*;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -49,13 +47,13 @@ public class ProductModel {
         this.clientId = clientId;
     }
 
-    private void validateSavingBalance(double balance, AccountType type) {
+    public void validateSavingBalance(double balance, AccountType type) {
         if(AccountType.SAVING.equals(type) && balance < 0){
             throw new NotAllowedOperationException(MIN_BALANCE_SAVING_ACCOUNT_MESSAGE);
         }
     }
 
-    private void validateAccountNumber(String accountNumber) {
+    public void validateAccountNumber(String accountNumber) {
         if(null == accountNumber){
             throw new MandatoryValueException(REQUIRED_ACCOUNT_NUMBER_MESSAGE);
         }
