@@ -85,8 +85,8 @@ public class ClientModel {
         if(null == value){
             throw new MandatoryValueException("El nombre y apellido es obligatorio");
         }
-        if(value.trim().length() < 2){
-            throw new InvalidValueException("El nombre y apellido debe tener mas de 2 letras");
+        if(value.trim().length() < 3){
+            throw new InvalidValueException("El nombre y apellido debe tener más de 2 letras");
         }
     }
 }

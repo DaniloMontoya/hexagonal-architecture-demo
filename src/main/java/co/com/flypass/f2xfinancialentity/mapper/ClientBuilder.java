@@ -8,7 +8,6 @@ import co.com.flypass.f2xfinancialentity.model.dto.ClientDTO;
 import co.com.flypass.f2xfinancialentity.model.dto.ClientUpdateDTO;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 
 /**
  * @author Ing. Danilo Montoya Hernandez;
