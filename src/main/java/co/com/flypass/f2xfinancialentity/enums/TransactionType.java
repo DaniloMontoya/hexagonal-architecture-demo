@@ -1,4 +1,4 @@
-package co.com.flypass.j2xfinancialentity.enums;
+package co.com.flypass.f2xfinancialentity.enums;
 
 /**
  * @author Ing. Danilo Montoya Hernandez;

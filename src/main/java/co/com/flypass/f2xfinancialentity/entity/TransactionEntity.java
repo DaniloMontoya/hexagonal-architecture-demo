@@ -1,7 +1,7 @@
-package co.com.flypass.j2xfinancialentity.entity;
+package co.com.flypass.f2xfinancialentity.entity;
 
 
-import co.com.flypass.j2xfinancialentity.enums.TransactionType;
+import co.com.flypass.f2xfinancialentity.enums.TransactionType;
 import jakarta.persistence.*;
 import lombok.Data;
 
