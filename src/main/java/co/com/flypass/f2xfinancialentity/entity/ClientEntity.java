@@ -33,4 +33,8 @@ public class ClientEntity {
     private LocalDate birthday;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
+
+    public ClientEntity(String id){
+        this.id = id;
+    }
 }

@@ -1,41 +1,25 @@
-package co.com.flypass.f2xfinancialentity.entity;
+package co.com.flypass.f2xfinancialentity.model.dto;
 
 import co.com.flypass.f2xfinancialentity.enums.AccountStatus;
 import co.com.flypass.f2xfinancialentity.enums.AccountType;
-import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 /**
  * @author Ing. Danilo Montoya Hernandez;
  * Email: danilo9831montoya@gmail.com
- * @version Id: <b>j2x-financial-entity</b> 09/03/2024, 4:54 PM
+ * @version Id: <b>j2x-financial-entity</b> 10/03/2024, 12:13 AM
  **/
 @Data
-@Entity
-@Table(name = "PRODUCT")
-@AllArgsConstructor
-@NoArgsConstructor
-public class ProductAccountEntity {
-    @Id
+public class ProductUpdateDTO {
     private String id;
-
-    @Enumerated(EnumType.STRING)
     private AccountType type;
-
-    @Column(unique = true)
     private String accountNumber;
-    @Enumerated(EnumType.STRING)
     private AccountStatus status;
     private double balance;
     private boolean excludeGMF;
     private LocalDateTime creationDate;
     private LocalDateTime modificationDate;
-
-    @ManyToOne
-    @JoinColumn(name = "client_id")
-    private ClientEntity client;
+    private String clientId;
 }
