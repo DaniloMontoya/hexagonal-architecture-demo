@@ -12,3 +12,7 @@ spring:
 springdoc:
   api-docs:
     path: /api-docs
+logging:
+  file:
+    name: f2x_logs.log
+    path: ${LOGS_PATH}
