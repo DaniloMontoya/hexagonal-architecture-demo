@@ -1,6 +1,5 @@
 package co.com.flypass.f2xfinancialentity.infrastructure.exception.handler;
 
-import co.com.flypass.f2xfinancialentity.exception.*;
 import co.com.flypass.f2xfinancialentity.infrastructure.exception.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
