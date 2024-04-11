@@ -1,6 +1,7 @@
 package co.com.flypass.f2xfinancialentity.model;
 
-import co.com.flypass.f2xfinancialentity.enums.IdentificationType;
+import co.com.flypass.f2xfinancialentity.application.model.ClientModel;
+import co.com.flypass.f2xfinancialentity.domain.enums.IdentificationType;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

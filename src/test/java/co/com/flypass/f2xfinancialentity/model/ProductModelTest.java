@@ -1,13 +1,11 @@
 package co.com.flypass.f2xfinancialentity.model;
 
-import co.com.flypass.f2xfinancialentity.enums.AccountType;
-import co.com.flypass.f2xfinancialentity.exception.InvalidValueException;
-import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
-import co.com.flypass.f2xfinancialentity.exception.NotAllowedOperationException;
+import co.com.flypass.f2xfinancialentity.domain.enums.AccountType;
+import co.com.flypass.f2xfinancialentity.infrastructure.exception.InvalidValueException;
+import co.com.flypass.f2xfinancialentity.infrastructure.exception.MandatoryValueException;
+import co.com.flypass.f2xfinancialentity.infrastructure.exception.NotAllowedOperationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ing. Danilo Montoya Hernandez;

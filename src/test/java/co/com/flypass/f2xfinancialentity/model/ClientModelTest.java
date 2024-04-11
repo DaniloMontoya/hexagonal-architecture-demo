@@ -1,7 +1,7 @@
 package co.com.flypass.f2xfinancialentity.model;
 
-import co.com.flypass.f2xfinancialentity.exception.InvalidValueException;
-import co.com.flypass.f2xfinancialentity.exception.MandatoryValueException;
+import co.com.flypass.f2xfinancialentity.infrastructure.exception.InvalidValueException;
+import co.com.flypass.f2xfinancialentity.infrastructure.exception.MandatoryValueException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

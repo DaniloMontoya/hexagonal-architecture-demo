@@ -1,7 +1,8 @@
 package co.com.flypass.f2xfinancialentity.model;
 
-import co.com.flypass.f2xfinancialentity.enums.AccountStatus;
-import co.com.flypass.f2xfinancialentity.enums.AccountType;
+import co.com.flypass.f2xfinancialentity.application.model.ProductModel;
+import co.com.flypass.f2xfinancialentity.domain.enums.AccountStatus;
+import co.com.flypass.f2xfinancialentity.domain.enums.AccountType;
 
 import java.time.LocalDateTime;
 

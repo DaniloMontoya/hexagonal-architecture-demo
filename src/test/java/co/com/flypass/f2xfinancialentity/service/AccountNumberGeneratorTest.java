@@ -1,11 +1,8 @@
 package co.com.flypass.f2xfinancialentity.service;
 
+import co.com.flypass.f2xfinancialentity.application.service.AccountNumberGenerator;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * @author Ing. Danilo Montoya Hernandez;
