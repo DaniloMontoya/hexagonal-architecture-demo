@@ -1,8 +1,8 @@
 server:
-  port: 8082
+  port: ${SERVER_PORT}
 spring:
   datasource:
-    url: jdbc:postgresql://${DB_URL}/f2x_financial_entity
+    url: ${DB_URL}
     username: ${DB_USER}
     password: ${DB_PASSWORD}
     driverClassName: org.postgresql.Driver
@@ -14,7 +14,7 @@ springdoc:
     path: /api-docs
 logging:
   file:
-    name: f2x_logs.log
+    name: ${LOGS_FILE_NAME}
     path: ${LOGS_PATH}
   level:
-    co.com.flypass: debug
+    com.danilomontoya: ${LOGS_LEVEL}
