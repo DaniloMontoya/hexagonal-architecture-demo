@@ -3,7 +3,7 @@ package com.danilomontoya.hexagonalarchitecturedemo.application.service.impl;
 import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.exception.NotAllowedOperationException;
 import com.danilomontoya.hexagonalarchitecturedemo.application.mapper.ProductMapper;
 import com.danilomontoya.hexagonalarchitecturedemo.application.model.builder.ProductBuilder;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductDTO;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.repository.ProductRepository;
 import com.danilomontoya.hexagonalarchitecturedemo.application.service.ProductTransactionService;
 import lombok.RequiredArgsConstructor;

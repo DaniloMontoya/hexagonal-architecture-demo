@@ -1,6 +1,6 @@
 package com.danilomontoya.hexagonalarchitecturedemo.model;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.ClientModel;
+import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.Customer;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.enums.IdentificationType;
 
 import java.time.LocalDate;
@@ -23,8 +23,8 @@ public class ClientBuilderTest {
 
     private LocalDateTime modificationDate = LocalDateTime.now();
 
-    public ClientModel build(){
-        return new ClientModel(
+    public Customer build(){
+        return new Customer(
                 id,
                 identificationType,
                 identificationNumber,

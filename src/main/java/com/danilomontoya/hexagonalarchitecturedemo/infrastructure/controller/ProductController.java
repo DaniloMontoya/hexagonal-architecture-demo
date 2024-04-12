@@ -1,7 +1,7 @@
 package com.danilomontoya.hexagonalarchitecturedemo.infrastructure.controller;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductCreateDTO;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductCreateDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductDTO;
 import com.danilomontoya.hexagonalarchitecturedemo.application.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

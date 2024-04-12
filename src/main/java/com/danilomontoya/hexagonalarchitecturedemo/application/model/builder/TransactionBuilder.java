@@ -1,6 +1,6 @@
 package com.danilomontoya.hexagonalarchitecturedemo.application.model.builder;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.TransactionModel;
+import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.TransactionModel;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.enums.TransactionType;
 import lombok.Getter;
 

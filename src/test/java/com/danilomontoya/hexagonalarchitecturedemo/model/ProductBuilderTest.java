@@ -1,6 +1,6 @@
 package com.danilomontoya.hexagonalarchitecturedemo.model;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.ProductModel;
+import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.Product;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.enums.AccountStatus;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.enums.AccountType;
 
@@ -22,8 +22,8 @@ public class ProductBuilderTest {
     private LocalDateTime modificationDate = LocalDateTime.now();
     private String clientId = "12345";
 
-    public ProductModel build() {
-        return new ProductModel(id,
+    public Product build() {
+        return new Product(id,
                 type,
                 accountNumber,
                 status,

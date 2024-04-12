@@ -1,6 +1,6 @@
 package com.danilomontoya.hexagonalarchitecturedemo.application.service;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductDTO;
 import org.springframework.transaction.annotation.Transactional;
 
 /**

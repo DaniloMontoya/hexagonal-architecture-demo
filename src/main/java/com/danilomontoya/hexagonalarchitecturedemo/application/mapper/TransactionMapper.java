@@ -1,8 +1,8 @@
 package com.danilomontoya.hexagonalarchitecturedemo.application.mapper;
 
-import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.TransactionEntity;
+import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.repository.entity.TransactionEntity;
 import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.exception.MandatoryValueException;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.TransactionModel;
+import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.TransactionModel;
 import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.transaction.TransactionDTO;
 import org.springframework.stereotype.Service;
 

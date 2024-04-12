@@ -1,10 +1,10 @@
 package com.danilomontoya.hexagonalarchitecturedemo.application.mapper;
 
-import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.ClientEntity;
-import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.ProductAccountEntity;
+import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.repository.entity.CustomerEntity;
+import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.repository.entity.ProductAccountEntity;
 import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.exception.MandatoryValueException;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.ProductModel;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.Product;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductDTO;
 import org.springframework.stereotype.Component;
 
 /**
@@ -14,28 +14,28 @@ import org.springframework.stereotype.Component;
  **/
 @Component
 public class ProductMapper {
-    public ProductDTO modelToDto(ProductModel productModel) {
-        if(null == productModel){
+    public ProductDTO modelToDto(Product product) {
+        if(null == product){
             throw new MandatoryValueException("Modelo requerido");
         }
         var productDTO = new ProductDTO();
-        productDTO.setId(productModel.getId());
-        productDTO.setType(productModel.getType());
-        productDTO.setAccountNumber(productModel.getAccountNumber());
-        productDTO.setStatus(productModel.getStatus());
-        productDTO.setBalance(productModel.getBalance());
-        productDTO.setExcludeGMF(productModel.isExcludeGMF());
-        productDTO.setCreationDate(productModel.getCreationDate());
-        productDTO.setModificationDate(productModel.getModificationDate());
-        productDTO.setClientId(productModel.getClientId());
+        productDTO.setId(product.getId());
+        productDTO.setType(product.getType());
+        productDTO.setAccountNumber(product.getAccountNumber());
+        productDTO.setStatus(product.getStatus());
+        productDTO.setBalance(product.getBalance());
+        productDTO.setExcludeGMF(product.isExcludeGMF());
+        productDTO.setCreationDate(product.getCreationDate());
+        productDTO.setModificationDate(product.getModificationDate());
+        productDTO.setClientId(product.getClientId());
         return productDTO;
     }
 
-    public ProductModel entityToModel(ProductAccountEntity product) {
+    public Product entityToModel(ProductAccountEntity product) {
         if(null == product){
             throw new MandatoryValueException("Entidad requerida");
         }
-        return new ProductModel(
+        return new Product(
                 product.getId(),
                 product.getType(),
                 product.getAccountNumber(),
@@ -48,20 +48,20 @@ public class ProductMapper {
         );
     }
 
-    public ProductAccountEntity modelToEntity(ProductModel productModel) {
-        if(null == productModel){
+    public ProductAccountEntity modelToEntity(Product product) {
+        if(null == product){
             throw new MandatoryValueException("Modelo requerido");
         }
         return new ProductAccountEntity(
-                productModel.getId(),
-                productModel.getType(),
-                productModel.getAccountNumber(),
-                productModel.getStatus(),
-                productModel.getBalance(),
-                productModel.isExcludeGMF(),
-                productModel.getCreationDate(),
-                productModel.getModificationDate(),
-                new ClientEntity(productModel.getClientId())
+                product.getId(),
+                product.getType(),
+                product.getAccountNumber(),
+                product.getStatus(),
+                product.getBalance(),
+                product.isExcludeGMF(),
+                product.getCreationDate(),
+                product.getModificationDate(),
+                new CustomerEntity(product.getClientId())
         );
     }
 }

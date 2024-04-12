@@ -1,6 +1,6 @@
 package com.danilomontoya.hexagonalarchitecturedemo.domain.repository;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.TransactionModel;
+import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.TransactionModel;
 
 import java.util.List;
 

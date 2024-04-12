@@ -1,7 +1,7 @@
 package com.danilomontoya.hexagonalarchitecturedemo.application.service;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductCreateDTO;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductCreateDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductDTO;
 
 import java.util.List;
 

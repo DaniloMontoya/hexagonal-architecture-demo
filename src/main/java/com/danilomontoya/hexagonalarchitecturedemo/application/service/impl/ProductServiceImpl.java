@@ -7,12 +7,12 @@ import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.exception.NotA
 import com.danilomontoya.hexagonalarchitecturedemo.infrastructure.exception.NotFindException;
 import com.danilomontoya.hexagonalarchitecturedemo.application.mapper.ProductMapper;
 import com.danilomontoya.hexagonalarchitecturedemo.application.model.builder.ProductBuilder;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductCreateDTO;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductCreateDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductDTO;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.repository.ProductRepository;
 import com.danilomontoya.hexagonalarchitecturedemo.application.service.AccountNumberGenerator;
 import com.danilomontoya.hexagonalarchitecturedemo.application.service.ProductService;
-import com.danilomontoya.hexagonalarchitecturedemo.application.service.ValidateClientExist;
+import com.danilomontoya.hexagonalarchitecturedemo.application.service.validator.CustomerExistValidatorService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     public static final String NOT_ZERO_BALANCE_ACCOUNT_MESSAGE = "El saldo de la cuenta debe ser 0";
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
-    private final ValidateClientExist validateClientExist;
+    private final CustomerExistValidatorService customerExistValidatorService;
     private final AccountNumberGenerator accountNumberGenerator;
 
     @Override
@@ -79,15 +79,50 @@ public class ProductServiceImpl implements ProductService {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
     @Override
     public ProductDTO create(ProductCreateDTO productCreateDTO) {
         log.debug("Creating product... {}", productCreateDTO);
-        validateClientExist.existClientById(productCreateDTO.getClientId());
+        customerExistValidatorService.existClientById(productCreateDTO.getClientId());
         var productBuilder = createBuilderProduct(productCreateDTO);
         var productModel = productRepository.create(productBuilder.build());
         log.info("Product created {}", productModel);
         return productMapper.modelToDto(productModel);
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public ProductBuilder createBuilderProduct(ProductCreateDTO productCreateDTO){
         if(AccountType.SAVING.equals(productCreateDTO.getType())){

@@ -1,10 +1,10 @@
 package com.danilomontoya.hexagonalarchitecturedemo.application.model.builder;
 
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductCreateDTO;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.ProductDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductCreateDTO;
+import com.danilomontoya.hexagonalarchitecturedemo.application.model.dto.product.ProductDTO;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.enums.AccountStatus;
 import com.danilomontoya.hexagonalarchitecturedemo.domain.enums.AccountType;
-import com.danilomontoya.hexagonalarchitecturedemo.application.model.ProductModel;
+import com.danilomontoya.hexagonalarchitecturedemo.domain.entity.Product;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
  **/
 @Getter
 public class ProductBuilder {
+    // TODO: 11/04/24 No usar los builder dentro de las aplicaciones.
     private String id;
     private AccountType type;
     private String accountNumber;
@@ -78,8 +79,8 @@ public class ProductBuilder {
     }
 
 
-    public ProductModel build() {
-        return new ProductModel(id,
+    public Product build() {
+        return new Product(id,
                 type,
                 accountNumber,
                 status,
